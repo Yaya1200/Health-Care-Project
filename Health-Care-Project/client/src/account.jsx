@@ -26,13 +26,18 @@ function Account(){
       }
       
     }
-    function handleSaveSignup(){
+    async function handleSaveSignup(){
       setSaveSignup(signupData);
+      try{
+        await axios.post('http://localhost:5000/signup',signupData)
       setLoginData({username:'',email:'',password:''});
       setSignupData({username:'',email:'',password:''});
       setLogin(true);
       alert('Account created successfully! Please login to continue.');
-      
+      }
+      catch(error){
+        console.log(error)
+      }
     }
     
         return(
