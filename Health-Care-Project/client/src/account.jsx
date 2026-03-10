@@ -4,8 +4,6 @@ import './account.css'
 import axios from "axios";
 function Account(){
     const[login,setLogin]=useState(true);
-    const[saveSignup,setSaveSignup]=useState([]);
-    const[saveLogin, setSaveLogin]=useState([]);
     const[signupData, setSignupData]=useState({username:'',email:'',password:''});
     const[loginData, setLoginData]=useState({username:'',email:'',password:''}); 
     function handleSignupChange(e){
@@ -15,7 +13,6 @@ function Account(){
          setLoginData({...loginData,[e.target.name]:e.target.value})
       }
     async function handleSaveLogin(){
-      setSaveLogin(loginData);
       try{await axios.post('http://localhost:5000/login',loginData)
       setSignupData({username:'',email:'',password:''});
       setLoginData({username:'',email:'',password:''});
@@ -27,7 +24,6 @@ function Account(){
       
     }
     async function handleSaveSignup(){
-      setSaveSignup(signupData);
       try{
         await axios.post('http://localhost:5000/signup',signupData)
       setLoginData({username:'',email:'',password:''});
