@@ -13,7 +13,7 @@ function Account(){
          setLoginData({...loginData,[e.target.name]:e.target.value})
       }
     async function handleSaveLogin(){
-      try{await axios.post('http://localhost:5000/login',loginData)
+      try{await axios.post('http://localhost:3000/login',loginData)
       setSignupData({username:'',email:'',password:''});
       setLoginData({username:'',email:'',password:''});
       alert('Login successful! Welcome back.');
@@ -25,7 +25,7 @@ function Account(){
     }
     async function handleSaveSignup(){
       try{
-        await axios.post('http://localhost:5000/signup',signupData)
+        await axios.post('http://localhost:3000/signup',signupData)
       setLoginData({username:'',email:'',password:''});
       setSignupData({username:'',email:'',password:''});
       setLogin(true);
