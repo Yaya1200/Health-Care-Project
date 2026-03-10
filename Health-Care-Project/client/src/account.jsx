@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import './account.css'
+import axios from "axios";
 function Account(){
     const[login,setLogin]=useState(true);
     const[saveSignup,setSaveSignup]=useState([]);
@@ -13,12 +14,17 @@ function Account(){
     function handleLoginChange(e){
          setLoginData({...loginData,[e.target.name]:e.target.value})
       }
-    function handleSaveLogin(){
+    async function handleSaveLogin(){
       setSaveLogin(loginData);
+      try{await axios.post('http://localhost:5000/login',loginData)
       setSignupData({username:'',email:'',password:''});
       setLoginData({username:'',email:'',password:''});
       alert('Login successful! Welcome back.');
-      console.log('Saved Login Data:', loginData);
+      }
+      catch(error){
+        console.log(error)
+      }
+      
     }
     function handleSaveSignup(){
       setSaveSignup(signupData);
@@ -26,9 +32,9 @@ function Account(){
       setSignupData({username:'',email:'',password:''});
       setLogin(true);
       alert('Account created successfully! Please login to continue.');
-      console.log('Saved Signup Data:', signupData);
+      
     }
-
+    
         return(
       login ? <div className="account-page">
         <p className="account-title">Login Page</p>
