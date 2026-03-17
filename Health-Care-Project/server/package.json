@@ -1,6 +1,1 @@
-{
-  "dependencies": {
-    "pg": "^8.20.0",
-    "postgres": "^3.4.8"
-  }
-}
+{"type":"module","dependencies":{"cors":"^2.8.6","express":"^5.2.1","pg":"^8.20.0","postgres":"^3.4.8"}}
