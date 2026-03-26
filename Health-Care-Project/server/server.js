@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const port = 3000;
+const port = 3000
 
 app.post('/login', async (req, res) => {
   try {
