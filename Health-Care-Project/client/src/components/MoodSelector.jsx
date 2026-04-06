@@ -34,7 +34,6 @@ export default function MoodSelector({ onMoodSelect }) {
             className={`mood-btn ${selectedMood === mood.label ? "active" : ""}`}
             onClick={() => handleSelect(mood)}
           >
-
             <span className="emoji">{mood.emoji}</span>
             <span>{mood.label}</span>
 
