@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { createClient } from "@supabase/supabase-js"
-
-// Initialize Supabase
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL,
-  process.env.REACT_APP_SUPABASE_ANON_KEY
-)
-
+import { supabase } from "../services/supabaseClient";
 export default function Navbar() {
 
   const [user, setUser] = useState(null)
