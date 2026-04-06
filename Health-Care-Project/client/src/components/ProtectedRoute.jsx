@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react"
 import { Navigate } from "react-router-dom"
-import { createClient } from "@supabase/supabase-js"
-
-// Initialize Supabase (replace with your keys)
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL,
-  process.env.REACT_APP_SUPABASE_ANON_KEY
-)
-
+import { supabase } from "../services/supabaseClient";
 export default function ProtectedRoute({ children }) {
 
   const [loading, setLoading] = useState(true)
