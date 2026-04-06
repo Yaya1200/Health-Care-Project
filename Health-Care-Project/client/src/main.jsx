@@ -1,14 +1,30 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import Header from './header.jsx'
-import Footer from './footer.jsx'
+import { BrowserRouter } from "react-router-dom"  // ✅ ADD THIS
 
+import Navbar from './components/Navbar.jsx'
+import Footer from './components/Footer.jsx'
 import App from './App.jsx'
+
+import { AuthProvider } from './context/AuthContext.jsx'
+import { ChatProvider } from './context/ChatContext.jsx'
+import { NotificationProvider } from './context/NotificationContext.jsx'
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Header/>
-    <App />
-    <Footer/>
+    <BrowserRouter> {/* ✅ WRAP EVERYTHING */}
+      <AuthProvider>
+        <ChatProvider>
+          <NotificationProvider>
+
+            <Navbar />
+            <App />
+            <Footer />
+
+          </NotificationProvider>
+        </ChatProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </StrictMode>,
 )
