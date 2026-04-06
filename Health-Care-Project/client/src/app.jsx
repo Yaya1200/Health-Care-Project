@@ -1,23 +1,75 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Account from "./account.jsx";
-import Analysis from "./analysis.jsx";
-import Home from "./home.jsx";
-import CreatePost from "./createPost.jsx";
-import ReplayPost from "./replayPost.jsx";
-import Resources from "./resource.jsx";
-
+import { Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Chat from "./pages/Chat.jsx";
+import ChatRoom from "./pages/ChatRoom.jsx";
+import MoodTracker from "./pages/MoodTracker.jsx";
+import Journal from "./pages/Journal.jsx";
+import Notifications from "./pages/Notifications.jsx";
+import Profile from "./pages/Profile.jsx";
+import Settings from "./pages/Settings.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import Home from "./pages/Home.jsx";
+import Navbar from "./components/Navbar.jsx"; 
+import Footer from "./components/Footer.jsx";
+import '../index.css'
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Account />} />
-        <Route path="/analysis" element={<Analysis />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/createpost" element={<CreatePost />} />
-        <Route path="/replaypost" element={<ReplayPost />} />
-        <Route path="/resources" element={<Resources />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/dashboard" element={
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      } />
+
+      <Route path="/chat" element={
+        <ProtectedRoute>
+          <Chat />
+        </ProtectedRoute>
+      } />
+
+      <Route path="/chat/:chatId" element={
+        <ProtectedRoute>
+          <ChatRoom />
+        </ProtectedRoute>
+      } />
+
+      <Route path="/mood-tracker" element={
+        <ProtectedRoute>
+          <MoodTracker />
+        </ProtectedRoute>
+      } />
+
+      <Route path="/journal" element={
+        <ProtectedRoute>
+          <Journal />
+        </ProtectedRoute>
+      } />
+
+      <Route path="/notifications" element={
+        <ProtectedRoute>
+          <Notifications />
+        </ProtectedRoute>
+      } />
+
+      <Route path="/profile" element={
+        <ProtectedRoute>
+          <Profile />
+        </ProtectedRoute>
+      } />
+
+      <Route path="/settings" element={
+        <ProtectedRoute>
+          <Settings />
+        </ProtectedRoute>
+      } />
+
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/" element={<Login />} />
+      <Route path="/home" element={<Home />} />
+    </Routes>
   );
 }
 
