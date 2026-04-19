@@ -1,6 +1,5 @@
 import { supabase } from "./supabaseClient"
-
-// Register user
+// register user
 export const registerUser = async (email, password) => {
   const { data, error } = await supabase.auth.signUp({
     email,
