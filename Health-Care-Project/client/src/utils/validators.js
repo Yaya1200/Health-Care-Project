@@ -1,5 +1,3 @@
-// client/src/utils/Validators.js
-
 // Validate email format
 export function validateEmail(email) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
