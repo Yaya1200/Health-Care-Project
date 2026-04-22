@@ -1,4 +1,4 @@
-// client/src/utils/formatData.js
+
 
 // Format a Date object or ISO string to 'YYYY-MM-DD'
 export function formatDate(date) {
