@@ -1,4 +1,3 @@
-// src/services/profileService.js
 import { supabase } from "./supabaseClient"
 
 // ----------------- Profile -----------------
