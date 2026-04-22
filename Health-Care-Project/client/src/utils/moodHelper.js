@@ -1,5 +1,3 @@
-// client/src/utils/moodHelper.js
-
 // Predefined moods
 export const moods = [
   { name: "Happy", emoji: "😊", color: "#facc15" },
