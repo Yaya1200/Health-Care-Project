@@ -13,7 +13,7 @@ import { NotificationProvider } from './context/NotificationContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter> {/* ✅ WRAP EVERYTHING */}
+    <BrowserRouter> 
       <AuthProvider>
         <ChatProvider>
           <NotificationProvider>
