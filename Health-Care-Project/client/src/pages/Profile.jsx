@@ -21,6 +21,7 @@ export default function Profile() {
     }
     fetchProfile()
   }, [user.id])
+  
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value })
