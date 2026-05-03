@@ -9,7 +9,7 @@ export default function Dashboard() {
   const suggestedUsers = [
     { id:1, name:"Alex", field:"Computer Science", mood:"Stressed" },
     { id:2, name:"Sam", field:"Psychology", mood:"Happy" },
-    { id:3, name:"Maya", field:"Engineering", mood:"Tired" }
+    { id:3, name:"Maya", field:"Engineering", mood:"Tired" },
   ]
 
   const handleStartChat = (user) => {
