@@ -9,7 +9,7 @@ export default function Profile() {
     email: "",
     field: "",
     interests: "",
-    avatar: ""
+    avatar: "",
   })
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
