@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Get current session (v2 API)
+    
     const getSession = async () => {
       const { data } = await supabase.auth.getSession();
       setUser(data.session?.user ?? null);
