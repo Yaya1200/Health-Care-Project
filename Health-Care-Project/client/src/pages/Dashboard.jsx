@@ -21,7 +21,8 @@ export default function Dashboard() {
 
       <h2>Welcome {user?.email}</h2>
 
-      {/* Mood Section */}
+    }
+      
       <section className="dashboard-section">
         <MoodSelector />
       </section>
