@@ -8,7 +8,8 @@ export const ChatProvider = ({ children }) => {
   const [activeChat, setActiveChat] = useState(null)
 
   const sendMessage = (message) => {
-    setMessages((prev) => [...prev, message])}
+    setMessages((prev) => {
+      return [...prev, message]})}
   
 
   return (
