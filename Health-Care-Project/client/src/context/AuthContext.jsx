@@ -9,8 +9,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const getSession = async () => {
       const { data } = await supabase.auth.getSession();
-      setUser(data.session?.user ?? null);
-    };
+      setUser(data.session?.user ?? null);};
 
     getSession();
 
