@@ -1,31 +1,59 @@
 import { supabase } from "./supabaseClient"
+
+const normalizeError = (error) => {
+  if (!error) return null
+  if (typeof error === "string") {
+    return { message: error }
+  }
+  return { message: error.message || "Unexpected auth error" }
+}
+
 export const registerUser = async (email, password) => {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password
-  })
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password
+    })
 
-  return { data, error }
+    return { data, error: normalizeError(error) }
+  } catch (error) {
+    return {
+      data: null,
+      error: normalizeError(error)
+    }
+  }
 }
 
-// Login user
 export const loginUser = async (email, password) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password
-  })
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
 
-  return { data, error }
+    return { data, error: normalizeError(error) }
+  } catch (error) {
+    return {
+      data: null,
+      error: normalizeError(error)
+    }
+  }
 }
 
-// Logout
 export const logoutUser = async () => {
-  const { error } = await supabase.auth.signOut()
-  return { error }
+  try {
+    const { error } = await supabase.auth.signOut()
+    return { error: normalizeError(error) }
+  } catch (error) {
+    return { error: normalizeError(error) }
+  }
 }
 
-// Get current user
 export const getCurrentUser = async () => {
-  const { data } = await supabase.auth.getUser()
-  return data.user
+  try {
+    const { data } = await supabase.auth.getUser()
+    return data?.user ?? null
+  } catch (error) {
+    return null
+  }
 }
