@@ -11,9 +11,8 @@ import Settings from "./pages/Settings.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Home from "./pages/Home.jsx";
-import Navbar from "./components/Navbar.jsx"; 
-import Footer from "./components/Footer.jsx";
 import '../index.css'
+
 function App() {
   return (
     <Routes>
@@ -67,8 +66,9 @@ function App() {
 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
+      <Route path="*" element={<Home />} />
     </Routes>
   );
 }
