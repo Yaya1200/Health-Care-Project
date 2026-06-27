@@ -2,9 +2,7 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { loginUser } from "../services/authService"
 
-
 export default function Login() {
-
   const navigate = useNavigate()
 
   const [email, setEmail] = useState("")
@@ -18,7 +16,7 @@ export default function Login() {
     setLoading(true)
     setError(null)
 
-    const { data, error } = await loginUser(email, password)
+    const { error } = await loginUser(email, password)
 
     if (error) {
       setError(error.message)
@@ -26,46 +24,51 @@ export default function Login() {
       return
     }
 
-    // Redirect to dashboard after login
     navigate("/dashboard")
   }
 
   return (
-    <div className="auth-container">
+    <div className="auth-page">
+      <div className="auth-card">
+        <h2>Welcome back</h2>
+        <p>Log in to continue your wellness journey.</p>
 
-      <h2>Login</h2>
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-field">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-      <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-field">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+          {error && <p className="error">{error}</p>}
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <button type="submit" className="primary-btn" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
 
-        {error && <p className="error">{error}</p>}
-
-        <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
-
-      </form>
-
-      <p>
-        Don't have an account?{" "}
-        <Link to="/register">Register</Link>
-      </p>
-
+        <p className="auth-link">
+          Don’t have an account? <Link to="/register">Register</Link>
+        </p>
+      </div>
     </div>
   )
 }
