@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom"
 import { registerUser } from "../services/authService"
 
 export default function Register() {
-
   const navigate = useNavigate()
 
   const [email, setEmail] = useState("")
@@ -32,54 +31,63 @@ export default function Register() {
       return
     }
 
-    // After registration go to login
     navigate("/login")
   }
 
   return (
-    <div className="auth-container">
+    <div className="auth-page">
+      <div className="auth-card">
+        <h2>Create your account</h2>
+        <p>Join a more supportive space for student wellbeing.</p>
 
-      <h2>Create Account</h2>
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-field">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-      <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-field">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Create a password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e)=>setEmail(e.target.value)}
-          required
-        />
+          <div className="form-field">
+            <label htmlFor="confirmPassword">Confirm password</label>
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e)=>setPassword(e.target.value)}
-          required
-        />
+          {error && <p className="error">{error}</p>}
 
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e)=>setConfirmPassword(e.target.value)}
-          required
-        />
+          <button type="submit" className="primary-btn" disabled={loading}>
+            {loading ? "Creating account..." : "Register"}
+          </button>
+        </form>
 
-        {error && <p className="error">{error}</p>}
-
-        <button type="submit" disabled={loading}>
-          {loading ? "Creating account..." : "Register"}
-        </button>
-
-      </form>
-
-      <p>
-        Already have an account?{" "}
-        <Link to="/login">Login</Link>
-      </p>
-
+        <p className="auth-link">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
     </div>
   )
 }
