@@ -24,12 +24,13 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="page-shell">
-      <section className="section-card">
-        <div className="section-heading">
-          <h2>Welcome back, {user?.email || "student"}</h2>
-        </div>
-        <p>Your wellness hub is ready. Pick a small step for today and keep going.</p>
+    <div className="dashboard">
+
+      <h2>Welcome {user?.email}</h2>
+
+      {/* Mood Section */}
+      <section className="dashboard-section">
+        <MoodSelector />
       </section>
 
       <div className="dashboard-grid">
