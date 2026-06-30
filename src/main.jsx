@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom"
 
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
-import App from './App.jsx'
+import App from './app.jsx'
 
 import { AuthProvider } from './context/AuthContext.jsx'
 import { ChatProvider } from './context/ChatContext.jsx'
