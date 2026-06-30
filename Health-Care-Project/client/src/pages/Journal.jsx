@@ -1,34 +1,46 @@
 import { useState, useEffect } from "react"
+import { useAuth } from "../hooks/useAuth"
 import { getJournalEntries, addJournalEntry, deleteJournalEntry } from "../services/profileService"
 
 export default function Journal() {
-
+  const { user } = useAuth()
   const [entries, setEntries] = useState([])
   const [newEntry, setNewEntry] = useState("")
   const [loading, setLoading] = useState(false)
 
-  // Fetch journal entries on mount
   useEffect(() => {
     async function fetchEntries() {
-      const data = await getJournalEntries()
-      setEntries(data)
-    }
-    fetchEntries()
-  }, [])
+      if (!user?.id) {
+        setEntries([])
+        return
+      }
 
-  const handleAddEntry = async () => {
-    if (!newEntry.trim()) return
+      const data = await getJournalEntries(user.id)
+      setEntries(data || [])
+    }
+
+    fetchEntries()
+  }, [user?.id])
+
+  const handleAddEntry = async (event) => {
+    if (event?.preventDefault) event.preventDefault()
+    if (!newEntry.trim() || !user?.id || loading) return
 
     setLoading(true)
-    const entry = await addJournalEntry(newEntry)
-    setEntries([...entries, entry])
-    setNewEntry("")
-    setLoading(false)
+    try {
+      const entry = await addJournalEntry(user.id, newEntry.trim())
+      if (entry) {
+        setEntries((prevEntries) => [entry, ...prevEntries])
+      }
+      setNewEntry("")
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleDeleteEntry = async (id) => {
     await deleteJournalEntry(id)
-    setEntries(entries.filter(e => e.id !== id))
+    setEntries((prevEntries) => prevEntries.filter((entry) => entry.id !== id))
   }
 
   return (
@@ -40,8 +52,13 @@ export default function Journal() {
           placeholder="Write your thoughts here..."
           value={newEntry}
           onChange={(e) => setNewEntry(e.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+              handleAddEntry(event)
+            }
+          }}
         />
-        <button onClick={handleAddEntry} disabled={loading}>
+        <button onClick={() => handleAddEntry()} disabled={loading || !user?.id}>
           {loading ? "Saving..." : "Add Entry"}
         </button>
       </section>
