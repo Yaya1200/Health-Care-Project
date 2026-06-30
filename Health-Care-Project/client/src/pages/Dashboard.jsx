@@ -1,10 +1,12 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
+import { useChat } from "../context/ChatContext"
 import MoodSelector from "../components/MoodSelector"
 import UserCard from "../components/UserCard"
 
 export default function Dashboard() {
   const { user } = useAuth()
+  const { setActiveChat } = useChat()
   const navigate = useNavigate()
 
   const suggestedUsers = [
@@ -19,7 +21,8 @@ export default function Dashboard() {
     { title: "Review mood history", path: "/mood-tracker" }
   ]
 
-  const handleStartChat = () => {
+  const handleStartChat = (targetUser) => {
+    setActiveChat({ id: `user-${targetUser?.id || 1}`, name: targetUser?.name || "Student", type: "user" })
     navigate("/chat")
   }
 
