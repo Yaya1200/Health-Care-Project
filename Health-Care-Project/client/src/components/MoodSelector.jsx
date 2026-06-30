@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-export default function MoodSelector({ onMoodSelect }) {
-
+export default function MoodSelector({ onSelectMood, onMoodSelect, loading = false }) {
   const [selectedMood, setSelectedMood] = useState(null)
 
   const moods = [
@@ -9,40 +8,34 @@ export default function MoodSelector({ onMoodSelect }) {
     { emoji: "😐", label: "Neutral" },
     { emoji: "😔", label: "Sad" },
     { emoji: "😣", label: "Stressed" },
-    { emoji: "😴", label: "Tired" }
+    { emoji: "😴", label: "Tired" },
   ]
 
   const handleSelect = (mood) => {
     setSelectedMood(mood.label)
 
-    if (onMoodSelect) {
+    if (onSelectMood) {
+      onSelectMood(mood.label)
+    } else if (onMoodSelect) {
       onMoodSelect(mood.label)
     }
   }
 
   return (
     <div className="mood-selector">
-
-      <h3>How are you feeling today?</h3>
-
       <div className="mood-options">
-
         {moods.map((mood) => (
-
           <button
             key={mood.label}
             className={`mood-btn ${selectedMood === mood.label ? "active" : ""}`}
             onClick={() => handleSelect(mood)}
+            disabled={loading}
           >
             <span className="emoji">{mood.emoji}</span>
             <span>{mood.label}</span>
-
           </button>
-
         ))}
-
       </div>
-
     </div>
   )
 }
