@@ -1,27 +1,39 @@
 import { useState, useEffect } from "react"
 import MoodSelector from "../components/MoodSelector"
-import useMood from "../hooks/useMood"
+import { useAuth } from "../hooks/useAuth"
 import { logMood, getMoodHistory } from "../services/moodService"
 
 export default function MoodTracker() {
-
-  const { moods, setMoods } = useMood()
+  const { user } = useAuth()
+  const [moods, setMoods] = useState([])
   const [loading, setLoading] = useState(false)
 
-  // Fetch mood history on mount
   useEffect(() => {
     async function fetchMoods() {
-      const data = await getMoodHistory()
-      setMoods(data)
+      if (!user?.id) {
+        setMoods([])
+        return
+      }
+
+      const history = await getMoodHistory(user.id)
+      setMoods(history || [])
     }
+
     fetchMoods()
-  }, [setMoods])
+  }, [user?.id])
 
   const handleLogMood = async (mood) => {
+    if (!mood || !user?.id || loading) return
+
     setLoading(true)
-    await logMood(mood)
-    setMoods([...moods, { mood, date: new Date().toLocaleDateString() }])
-    setLoading(false)
+    try {
+      const loggedMood = await logMood(user.id, mood)
+      if (loggedMood) {
+        setMoods((prevMoods) => [loggedMood, ...prevMoods])
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -40,9 +52,9 @@ export default function MoodTracker() {
           <p>No moods logged yet.</p>
         ) : (
           <ul className="mood-history-list">
-            {moods.map((m, index) => (
-              <li key={index}>
-                <strong>{m.date}:</strong> {m.mood}
+            {moods.map((entry, index) => (
+              <li key={entry.id || index}>
+                <strong>{new Date(entry.created_at || entry.date).toLocaleDateString()}:</strong> {entry.mood}
               </li>
             ))}
           </ul>
