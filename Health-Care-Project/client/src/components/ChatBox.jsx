@@ -1,65 +1,58 @@
 import { useState } from "react"
+import { useChat } from "../context/ChatContext.jsx"
 import MessageBubble from "./MessageBubble"
 
 export default function ChatBox() {
-
-  const [messages, setMessages] = useState([
-    { id:1, user:"Alex", text:"Hello!", time:"10:30" },
-    { id:2, user:"You", text:"Hi!", time:"10:31" }
-  ])
-
+  const { activeChat, sendMessage, getMessages } = useChat()
   const [input, setInput] = useState("")
 
+  const messages = activeChat ? getMessages(activeChat.id) : []
+
   const handleSend = () => {
+    if (!input.trim() || !activeChat) return
 
-    if(!input.trim()) return
-
-    const newMessage = {
-      id: Date.now(),
-      user: "You",
-      text: input,
-      time: "now"
-    }
-
-    setMessages([...messages, newMessage])
+    sendMessage(input)
     setInput("")
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault()
+      handleSend()
+    }
+  }
+
   return (
-
     <div className="chatbox">
-
       <div className="chat-header">
-        <h3>Support Chat</h3>
+        <h3>{activeChat?.name || "Support Chat"}</h3>
       </div>
 
       <div className="chat-messages">
-
-        {messages.map((msg) => (
-          <MessageBubble
-            key={msg.id}
-            message={msg}
-            isOwnMessage={msg.user === "You"}
-          />
-        ))}
-
+        {messages.length === 0 ? (
+          <p>No messages yet. Start the conversation.</p>
+        ) : (
+          messages.map((msg) => (
+            <MessageBubble
+              key={msg.id}
+              message={msg}
+              isOwnMessage={msg.user === "You"}
+            />
+          ))
+        )}
       </div>
 
       <div className="chat-input">
-
         <input
           type="text"
           placeholder="Type message..."
           value={input}
-          onChange={(e)=>setInput(e.target.value)}
+          onChange={(event) => setInput(event.target.value)}
+          onKeyDown={handleKeyDown}
         />
 
-        <button onClick={handleSend}>
-          Send
-        </button>
-
+        <button onClick={handleSend}>Send</button>
       </div>
-
     </div>
   )
 }
